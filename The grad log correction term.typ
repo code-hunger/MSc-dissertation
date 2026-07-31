@@ -1,6 +1,8 @@
-= The $nabla log p$ term
+#import "Fokker-Planck diagram.typ": Fokker-Planck-illustration
+#import "lib/colour.typ": colour
+#import "lib/wide.typ": wide
 
-#import "FP.typ": Fokker-Planck-illustration
+= The $nabla log p$ term
 
 #let tb = $tilde(b)$
 #let tsigma = $tilde(sigma)$
@@ -8,22 +10,22 @@
 Pick an SDE $ d X_t = b_t (X_t) d t + sigma_t d W_t, quad X_0 ~ mu $
 and put its distributions $p_t d x = d PP_(X_t)$.
 
-#grid(columns: 3, column-gutter: 5pt,
-Fokker-Planck-illustration(tcolor.bg0, tcolor.fg0),
-grid.vline(stroke: tcolor.bg4), [],
-[
+#grid(
+  columns: if wide { 3 } else { 1 },
+  column-gutter: 5pt,
+  row-gutter: 1em,
+  align(center, Fokker-Planck-illustration(colour.bg0, colour.fg0)),
+  .. if wide { (grid.vline(stroke: colour.bg4), []) } else { () },
+  [
+    So we are after $tb, tsigma$ such that $ d Y_r = tb_r (Y_r) d r + tsigma_r d W_r$ has densities 
+    $d PP_(Y_r) = d PP_(X_t). $
 
-Now let us find $tb, tsigma$ that make for a process $Y_r$ having the densities of $X_t$ in reverse order.
+    Let $q_r d x = d PP_(Y_r)$. Then we desire $q_r = p_t$ for all $r ~ t$.
 
-So we are after $tb, tsigma$ such that $ d Y_r = tb_r (Y_r) d r + tsigma_r d W_r$ has densities 
-$d PP_(Y_r) = d PP_(X_t). $
-
-Let $q_r d x = d PP_(Y_r)$. Then we desire $q_r = p_t$ for all $r ~ t$.
-
-Both $p_t, q_r$ satisfy the respective Fokker-Plancks 
-$ dot(p_t) &= F[b_t,sigma_t,p_t] quad quad &&"for all" t in I
-\ dot(q_r) &= F[tb_r, tsigma_r, q_r]  &&"for all" r in I $
-],
+    Both $p_t, q_r$ satisfy the respective Fokker-Plancks 
+    $ dot(p_t) &= F[b_t,sigma_t,p_t] quad quad &&"for all" t in I
+    \ dot(q_r) &= F[tb_r, tsigma_r, q_r]  &&"for all" r in I $
+  ],
 )
 
 To connect the $tb, tsigma$ to $b,sigma$ we need to couple the two equations. Clearly we can get a

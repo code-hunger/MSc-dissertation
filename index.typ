@@ -1,11 +1,10 @@
 #import "lib/colour.typ": colour
 #import "lib/references.typ": myfooter
+#import "lib/wide.typ": page-setup
 
 #set par(justify: true)
 
-#set page("a4", footer: myfooter)
-
-We use the symbol $subset$ to denote the subset relation without enforcing irreflexivity.
+#set page(page-setup, footer: myfooter)
 
 #include("Omega-time duality.typ")
 
