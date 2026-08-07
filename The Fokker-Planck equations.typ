@@ -1,4 +1,5 @@
 #import "lib/references.typ": myref
+#import "lib/wide.typ": wide, grid-columns-count, grid-vline-if-wide
 
 = Chapman Kolmogorov
 
@@ -7,8 +8,8 @@ Assume a reference measure exists with respect to which the laws $PP_(Y_i), i in
 I assume it is the Lebesgue measure that works, but maybe this discussion works for other reference
 measures too?
 
-#let grid_section(c) = grid.cell(colspan: 3, align: center, heading(level: 3,c))
-#grid(columns: 3, column-gutter: 1em, row-gutter: 1em,
+#let grid_section(c) = grid.cell(colspan: grid-columns-count, align: center, heading(level: 3,c))
+#grid(columns: grid-columns-count, column-gutter: if wide { 1em } else { 0pt }, row-gutter: 1em,
 grid_section[Kolmogorov equations],
 [
 Denote $p_(i|j) (y | z) = p_(i j)(y, z) \/ p_j (z)$ the conditional density.
@@ -30,7 +31,7 @@ For diffusions we can drop higher order terms and get Fokker-Planck
 $ partial_t p_t (y) = &-partial_y (a^((1))(y,t)p_t (y))
                    \ &+ 1/2 partial_y^2 (a^((2))(y,t) p_t (y)) $
 ],
-grid.vline(),
+grid-vline-if-wide,
 none,
 [
 In infinitesimal form this requires a bit more machinery. We define the infinitesimal generator of
