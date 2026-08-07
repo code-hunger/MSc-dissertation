@@ -8,6 +8,10 @@
 
 #set page(page-setup, footer: myfooter)
 
+#import "@preview/wordometer:0.1.5": word-count, total-words
+#show: word-count
+
+In this document, there are #total-words words outside of math formulas.
 #include("Omega-time duality.typ")
 
 #include("The sampling problem.typ")
