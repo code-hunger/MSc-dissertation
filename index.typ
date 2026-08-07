@@ -35,3 +35,5 @@ where we rescaled the stochastic integral to $ G_t := (1\/2 (e^(2 t) - 1))^(-1\/
 #pagebreak()
 
 #include("Wiener process no invariant measure.typ")
+
+#include("The grad log correction term.typ")
