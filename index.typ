@@ -1,6 +1,8 @@
-#import "lib/colour.typ": colour
+#import "lib/colour.typ": colour, enable-colours
 #import "lib/references.typ": myfooter
 #import "lib/wide.typ": page-setup
+
+#show: enable-colours
 
 #set par(justify: true)
 
