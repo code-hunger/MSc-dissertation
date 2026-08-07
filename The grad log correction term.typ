@@ -1,7 +1,7 @@
 #import "Fokker-Planck diagram.typ": Fokker-Planck-illustration
 #import "@preview/intextual:0.1.1": intertext-rule, intertext, centertext
 #import "lib/colour.typ": colour
-#import "lib/wide.typ": wide
+#import "lib/wide.typ": wide, grid-columns-count, grid-vline-if-wide
 
 = The $nabla log p$ term
 
@@ -12,11 +12,11 @@ Pick an SDE $ d X_t = b_t (X_t) d t + sigma_t d W_t, quad X_0 ~ mu $
 and put its distributions $p_t d x = d PP_(X_t)$.
 
 #grid(
-  columns: if wide { 3 } else { 1 },
+  columns: grid-columns-count,
   column-gutter: 5pt,
   row-gutter: 1em,
   align(center, Fokker-Planck-illustration(colour.bg0, colour.fg0)),
-  .. if wide { (grid.vline(stroke: colour.bg4), []) } else { () },
+  ..grid-vline-if-wide,
   [
     Now let us find $tb, tsigma$ that make for a process $Y_r$ having the densities of $X_t$ in reverse order.
 

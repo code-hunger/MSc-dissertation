@@ -31,8 +31,7 @@ For diffusions we can drop higher order terms and get Fokker-Planck
 $ partial_t p_t (y) = &-partial_y (a^((1))(y,t)p_t (y))
                    \ &+ 1/2 partial_y^2 (a^((2))(y,t) p_t (y)) $
 ],
-grid-vline-if-wide,
-none,
+..grid-vline-if-wide,
 [
 In infinitesimal form this requires a bit more machinery. We define the infinitesimal generator of
 $X$ by $ scr(L)phi = (x |-> lim_(h->0) (P_h phi - phi)/h (x))\ = lr((d P_t)/(d t)|)_(t=0) (phi) $

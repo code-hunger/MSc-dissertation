@@ -1,4 +1,4 @@
-#let dark = sys.inputs.dark.len() > 0
+#let dark = "dark" in sys.inputs and sys.inputs.dark=="1"
 
 #import "@preview/gruvy:2.1.0": gruvbox, theme-colors
 
