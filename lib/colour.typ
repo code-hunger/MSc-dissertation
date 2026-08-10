@@ -1,4 +1,7 @@
 #let dark = "dark" in sys.inputs and sys.inputs.dark=="1"
+#if "dark" in sys.inputs and sys.inputs.dark not in ("", "0", "1") {
+  PARAM_ERROR /* ERROR: `dark` parameter not set correctly! Must be either empty, 0 or 1. */
+}
 
 #import "@preview/gruvy:2.1.0": gruvbox, theme-colors
 
