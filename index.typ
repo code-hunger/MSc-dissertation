@@ -1,22 +1,32 @@
-#import "lib/colour.typ": colour, enable-colours
-#import "lib/references.typ": myfooter
-#import "lib/wide.typ": page-setup
+#import "src/lib/colour.typ": colour, enable-colours
+#import "src/lib/references.typ": myfooter
+#import "src/lib/wide.typ": wide, page-base, page-args
 
 #show: enable-colours
 
 #set par(justify: true)
+#set text(size: 11pt)
 
-#set page(page-setup, footer: myfooter)
+#set page(page-base, ..page-args, footer: myfooter)
+#set heading(numbering: "A.1.")
+#show heading.where(level: 1): set block(below: 1.5em)
+#show heading.where(level: 2): set block(below: 1.1em)
+#show heading.where(level: 3): set block(below: 1em)
+#show heading.where(level: 4): set heading(numbering: none)
+
+#show "Ito": "Itô" // hihi
+#show "Borel": math.cal($B$)+"orel" // is that too silly lol?
 
 #import "@preview/wordometer:0.1.5": word-count, total-words
 #show: word-count
 
 In this document, there are #total-words words outside of math formulas.
-#include("Omega-time duality.typ")
+#include("src/Omega-time duality.typ")
 
-#include("The sampling problem.typ")
+#include("src/The sampling problem.typ")
 
-#include("The Fokker-Planck equations.typ")
+#pagebreak()
+#include("src/The Fokker-Planck equations.typ")
 
 = Ornstein-Uhlenbeck
 
@@ -38,6 +48,4 @@ where we rescaled the stochastic integral to $ G_t := (1\/2 (e^(2 t) - 1))^(-1\/
 
 #pagebreak()
 
-#include("Wiener process no invariant measure.typ")
-
-#include("The grad log correction term.typ")
+#include("src/The grad log correction term.typ")

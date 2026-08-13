@@ -14,7 +14,6 @@
 #let given = math.mid(sym.bar.v)
 
 #show: intertext-rule
-#set page(columns: if wide { 2 } else { 1 }, margin: if wide { 1cm } else { auto })
 
 = The Fokker-Planck equation
 

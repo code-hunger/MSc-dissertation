@@ -1,6 +1,6 @@
 = Separating the Dynamics from the initialisation of a stochastic process
 
-Fix a domain for stochastic processes $D subset RR^N $ and a time index set $I subset [0, infinity)$
+Fix a domain for stochastic processes $D subset.eq RR^N $ and a time index set $I subset [0, infinity)$
 (so $I$ can be discrete as well, $I = NN$).
 
 #let calF = $cal(F)$
