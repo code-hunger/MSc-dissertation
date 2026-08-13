@@ -4,7 +4,7 @@ If you're in the dark or use a small screen or want to print, you may prefer one
 
 |            |    A4 format   |     A5 format     |  Two-column format   |
 | ---------- | -------------- | ----------------- | -------------------- | 
-| Light mode | [index.pdf]      | [index.A5.pdf]      | [index.dense.pdf]      | 
-| Dark mode  | [index.dark.pdf] | [index.A5.dark.pdf] | [index.dense.dark.pdf] | 
+| Light mode | [index.pdf](index.pdf)      | [index.A5.pdf](index.A5.pdf)      | [index.dense.pdf](index.dense.pdf)      | 
+| Dark mode  | [index.dark.pdf](index.dark.pdf) | [index.A5.dark.pdf](index.A5.dark.pdf) | [index.dense.dark.pdf](index.dense.dark.pdf) | 
 
-To compile all versions, run `sh build-all.sh`.
+To compile all versions, run `bash build-all.bash`.
