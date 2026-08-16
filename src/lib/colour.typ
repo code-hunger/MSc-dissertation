@@ -10,7 +10,7 @@
   theme-colors.dark.soft
 } else {(
   fg0: black, fg1: luma(10%), fg2: luma(30%), fg3: gray, fg4: silver,
-  bg0: white, bg1: white, bg3: luma(70%), bg4: luma(60%)
+  bg0: white, bg1: luma(97%), bg3: luma(70%), bg4: luma(60%)
 )}
 
 #let enable-colours = if dark { gruvbox.with(theme-color: colour) } else { (x) => x }
