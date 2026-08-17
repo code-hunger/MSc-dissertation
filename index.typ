@@ -1,6 +1,7 @@
 #import "src/lib/colour.typ": colour, enable-colours
 #import "src/lib/references.typ": myfooter
 #import "src/lib/wide.typ": wide, page-base, page-args
+#import "@preview/great-theorems:0.1.2": great-theorems-init
 
 #show: enable-colours
 
@@ -13,6 +14,7 @@
 #show heading.where(level: 2): set block(below: 1.1em)
 #show heading.where(level: 3): set block(below: 1em)
 #show heading.where(level: 4): set heading(numbering: none)
+#show: great-theorems-init
 
 #show "Ito": "Itô" // hihi
 #show "Borel": math.cal($B$)+"orel" // is that too silly lol?
@@ -26,7 +28,8 @@ In this document, there are #total-words words outside of math formulas.
 #include("src/The sampling problem.typ")
 
 #pagebreak()
-#include("src/The Fokker-Planck equations.typ")
+#include("src/Time-derivative of density.typ")
+#include("src/The general Fokker-Planck equations.typ")
 
 = Ornstein-Uhlenbeck
 

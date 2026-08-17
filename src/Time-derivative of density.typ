@@ -2,6 +2,7 @@
 #import "lib/colour.typ": colour
 #import "@preview/intextual:0.1.1": intertext-rule, intertext, centertext, flushr, flushl
 #import "lib/wide.typ": wide, grid-columns-count, grid-vline-if-wide
+#import "lib/thm-blocks.typ": *
 
 #import "@preview/cetz:0.5.2"
 
@@ -9,57 +10,33 @@
 #let eqB = math.equation.with(numbering: "(1)", block: true, number-align: bottom)
 #let eref(r) = $(#ref(supplement: none, r))$
 
+#let langle = sym.chevron.l
 #let rangle = sym.chevron.r
-#let ranglee = math.op(sym.chevron.r.double)
+#let ranglee = (math.mid(sym.chevron.r.double))
+#let ranglee = math.op(math.mid(sym.chevron.r.double))
+#let ranglee = math.mid(math.op(sym.chevron.r.double))
 #let given = math.mid(sym.bar.v)
 #let calB = $cal(B)$
+#let ket(c) = box(math.lr($|#c rangle$)) // call `lr` to enlarge the surrounding brackets in |X> if needed
+#let PPP(c) = $PP#ket(c)$
+#let PPPy(c) = $PP_Y#ket(c)$
+#let derivation-end-here = flushr(math.square)
 
 #show: intertext-rule
 
-#import "@preview/great-theorems:0.1.2": mathblock, proofblock, great-theorems-init
-#show: great-theorems-init
-
-#let meta-prop = mathblock(blocktitle: "Context", stroke: (left: colour.fg3), inset: (left: 1em, y: 5pt))
-#let conclusion = mathblock(blocktitle: "Conclusion", inset: (x: 5pt,y: 7pt), fill: colour.bg1, stroke: .5pt + colour.fg3)
-#let derivation = proofblock(blocktitle: "Derivation", prefix: [_Derivation_.])
-#let derivation-end-here = flushr(math.square)
-
-= The Fokker-Planck equation
+= A generalized time derivative <generalized-time-derivative>
 
 #let pr(x,i) = $#box($(#x _#i)$)_#i$
 
-#let cond = footnote[usually for an interval $I subset.eq RR_(>=0)$ and a Borel $D subset.eq RR^N$]
-While we define#cond a $D$-valued stochastic process $pr(Y,t)$ on a probability space $(Omega, PP)$
-as a map of shape $Y : I times Omega -> D$ measurable in the $Omega$ argument, what is _relevant_
-are all its laws $PP_Y_t, t>=0$, as well as all its joint laws 
-
-$ "for all" n "and" t_1, dots, t_n, 
-  quad
-  PP_((Y_t_1, dots, Y_t_n)) : cal(B)(D^n) -> [0,1]. $
-
-So from the perspective of time flowing, what is relevant is not so much the sequence $pr(Y,t)$ of
-the _variables_, but rather the sequence $\(PP_Y_t)_(t>=0)$ of their _laws_.
-
-If $Y$ admits probability densities $ p(t,x) = dif PP_Y_t\/d x,$
-it is natural to consider the sequence of densities $pr(p(t,dot), t)$ and ask if their evolution is
-driven by a partial differential equation 
-$ (partial p(t,x))/(partial t) = F[t, x, p,partial_x p, partial_(x x) p, ...], "for some" F, $
-and in particular, *what is that $F$?*
-In this section, we answer that question positively for Ito diffusions.
-
-#let Walter-seminar = myref("Walter")
-#let Zaragoza = myref("Garcia-Palacios")
-
-== Properly generalizing $partial_t p(t,x)$
 We want to construct a differential equation describing the evolution of the laws of $Y_t$. 
 Inspired from PDEs on regular functions of the form $partial_t p(t,x) = F[t,x,partial_x,...]$ in
-mind, we might be tempted to simply replace the function $p$ by the law $PP_Y_t$ and develop an
-equation for $partial_t PP_Y_t$ (if exists). This naïve way leads to inconsistencies that we outline below.
+mind, we might be tempted to simply replace the function $p$ by the law $PPP(Y_t)$ and develop an
+equation for $partial_t PPP(Y_t)$ (if exists). This naïve way leads to inconsistencies that we outline below.
 
 In particular, a well-behaved generalization of $partial_t p(t,x)$ should be stable under changes to
-the initial conditions (the law of $Y_0$). We now show that $partial_t PP_Y_t$ is not.
+the initial conditions (the law of $Y_0$). We now show that $partial_t PPP(Y_t)$ is not.
 
-=== The problem with $partial_t PP_Y_t$
+== The problem with $partial_t PPP(Y_t)$
 
 #let X1 = $X$
 #let X2 = $Y$
@@ -79,7 +56,6 @@ sharing the same dynamics $d X_t = r thin d t = d Y_t$ but having different init
 So we'd want our generalization of $partial_t p$ to be the same on both processes.
 
 #let at0 = $|_(t=0)$
-#let PPP(c) = $PP lr(|#c rangle)$ // call `lr` to enlarge the surrounding brackets in |X> if needed
 #let dPPP(c) = $dif PPP(#c)$ // call `lr` to enlarge the surrounding brackets in |X> if needed
 #let LawX1t = $PPP(X1_t)$
 #let LawX2t = $PPP(X2_t)$
@@ -104,7 +80,6 @@ because in that case
 $         &PP(1 - r epsilon <= xi1 < 1) = r epsilon
 \ #derivation-end-here " but " &PP(1 - r epsilon <= xi2 < 1) = 2 r epsilon. $
 ]
-That is, 
 #conclusion[the time derivative of the laws of $X1_t,X2_t$ is not invariant to change of initial conditions.]
 
 ==== Why does $partial_t PPP(Z_t)$ vary?
@@ -195,7 +170,7 @@ While both $X1_t$ and $X2_t$, as well as their plotted densities, are moving to 
 same rate $r$ (both driven by a shared $d X1=r thin d t= d X2$), the rate of weight gain per unit time of
 $[1,infinity)$ is twice as large in the $X2$ case as in the $X1$ case.
 
-=== The time-derivative of $PPP(X_t)$
+== The time-derivative of $PPP(X_t)$
 
 #let rt = $r thin t$
 #meta-prop[
@@ -248,7 +223,7 @@ Two problems arise in the derivation of the last expression: for it to work,
 Thus it is important to go back to @taylor-with-continuous-density and proceed in a way that does
 not require canceling a $F'_zeta$ term.
 
-=== Getting out into the box
+== Getting #strike[out of] into the box
 
 In @densities-figure we treated the increment $PPP(Z_epsilon)-PPP(Z_0)$ to the first order in
 $epsilon$ as a rectangle. We then obtained its width by dividing its mass by its height: $(epsilon r
@@ -303,9 +278,9 @@ That is, the law $PPP(zeta)$ naturally falls of from $PPP(Z_0\,Z_epsilon)$, and 
 $ (dif PPP(Z_0\,Z_epsilon=y))/dPPP(Z_0) (x) = dif PPP(W_t = z-rt-x). $
 
 On sets $(A,B)in calB(RR^2)$, the join law decomposition above acts by
-$ PPP(&Z_0\,Z_epsilon)(A,B) = integral.double_((A,B)) dif PPP(Z_0\,Z_epsilon)
-\ &= integral_A (integral_B dif PPP(W_t=z-rt-x)) dif PPP(zeta=x)
-\ &= integral.double underbrace(1_(A,B) (x,x+rt+y) dif PPP(W_t=y), "pure evolution") dif PPP(zeta=x),
+$ &PPP(Z_0\,Z_epsilon)(A,B) = integral.double_((A,B)) dif PPP(Z_0\,Z_epsilon)
+\ &quad = integral_A (integral_B dif PPP(W_t=z-rt-x)) dif PPP(zeta=x)
+\ &quad = integral.double underbrace(1_(A,B) (x,x+rt+y) dif PPP(W_t=y), "pure evolution") dif PPP(zeta=x),
 $
 where we see the evolution dynamics integrated along the initial condition $zeta$. The Radon-Nikodym
 derivative above then corresponds to disintegrating this expression, i.e. taking the integrand only,
@@ -322,67 +297,3 @@ shaped precisely as a Markov kernel.
   factor that is easily cancellable by a Radon-Nikodym derivative against $PPP(Z_0)$, resulting in
   $ dPPP(Z_t\,Z_0)/dPPP(Z_0) = PPP(Z_t given Z_0). $
 ]
-
-== By Kramer-Moyal expansion
-
-Now that we understand that the proper object to study the distribuitional evolution of an Ito
-stochastic process is not $PPP(Y_t)$ but $PPP(Y_t given Y_0)$, we present the first approach to
-deriving the Fokker-Planck equation.
-
-We will derive it by Tailor-expansion of the transition densities, following the general approach in
-#Walter-seminar or the referenced inside #Zaragoza, sec. 4 and 5. However, we rework it in the
-language of measures and Markov kernels so that the probability distributions are not assumed to
-admit densities (against the Lebesgue measure, as done in these resources). This is why we will
-arrive at a PDE of distributions and not of ordinary functions.
-
-#let Yte = $Y_(t+epsilon)$
-Recall that the Dirac-delta function is the characteristic function with flipped arguments:
-for all measurable $A subset.eq RR$ and all $y in RR$, $ 1_A (y) = delta_y (A).$
-Evaluate that at $y:=Yte$: $ 1_A (Yte) = delta_Yte (A). $
-
-/*
-For two time points $t_1 <= t_2$ and an $epsilon>0$,
-the Chapman-Kolmogorov equation for the process $Y$ states that the probability flux between times $t_1$
-and $t_2 + epsilon$ goes through all possible values at the midtime $t_2$:
-
-$ PP|Y_(t_2 + epsilon) given Y_(t_1) rangle = PP|Y_(t_2 + epsilon) given Y_(t_2) ranglee Y_(t_2) given Y_(t_1) rangle. $
-
-Now we are interested to derive the time-evolution of the left-hand side, and so we need only two
-time points. Fix $t>0$ and $epsilon>0$ and plug $t_1 = t_2 = t$ above:
-
-$ PP|Y_(t + epsilon) given Y_t rangle &= PP|Y_(t + epsilon) given Y_t ranglee Y_t given Y_t rangle
-                                    \ &= PP|Y_(t + epsilon) given Y_t rangle
-$
-or, if we allow ourselves to write the time indices only:
-$ PP_Y|t + epsilon given t rangle = PP_Y|t + epsilon given t rangle. $
-*/
-
-We start from
-$ PP[Yte given Y_t] = EE [ delta_Yte given Y_t = y ]. $
-
-We want to Taylor-expand $delta_Yte = delta_(Y_t + (Yte - Y_t))$ around $Y_t$
-We aim to apply $d/(d epsilon)|_(epsilon=0)$.
-
-$ partial_t p_t (y) = &-partial_y (a^((1))(y,t)p_t (y))
-                   \ &+ 1/2 partial_y^2 (a^((2))(y,t) p_t (y)) $
-
-== By Generators
-In infinitesimal form this requires a bit more machinery. We define the infinitesimal generator of
-$X$ by $ scr(L)phi = (x |-> lim_(h->0) (P_h phi - phi)/h (x))\ = lr((d P_t)/(d t)|)_(t=0) (phi) $
-which tells us by how much a test function $phi$ (thought as a distribution density) is pushed by
-$X_t$ in an infinitesimal time. 
-For a time-homogeneous $d X_t = b(X_t) d t + sigma(X_t) d W_t$ this is#footnote[using Einstein summation] 
-$ scr(L) = b^i partial_i + 1/2 a^(i j)  partial_i partial_j, quad a:=sigma sigma^top. $
-
-Then $u(t,x) := (P_t phi)(x)$ satisfies $partial_t u = scr(L)u$
-
-Next we define the adjoint $scr(L)^*$ and forward Kolmogorov is 
-$ partial_t p_t (x,y) = scr(L)^+_y p_t (x,y)
-\ scr(L)^+ phi = 1/2 partial_i partial_j a^(i j) phi - partial_i b^i dot phi $
-where $p_t (x,y)$ is transition density from $x$ to
-$y$ in time $t$ (for time-homogeneous systems it doesn't matter at which time $t_0$ we start, only the
-time difference $t$).
-
-Then if $ rho(x) = (d PP_(X_0)) / (d x) (x),\ rho(t,y) := integral p_t (x,y)rho(x) dif x, $
-Fokker-Planck is $ partial_t rho(t,y) = scr(L)^+_y rho(t,y). $
-

@@ -8,6 +8,7 @@
 
 #let wide = format == ""
 #let page-base = if format in ("2-column", "") { "a4" } else { "a5" }
+#let a4 = page-base == "a4"
 
 #let page-args = (() => {
   let margins = (// more margins to allow space for note taking with other tools
