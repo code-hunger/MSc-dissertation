@@ -22,7 +22,11 @@
 #import "@preview/wordometer:0.1.5": word-count, total-words
 #show: word-count
 
-In this document, there are #total-words words outside of math formulas.
+#page(columns: 1, margin: (x: 20%))[
+  In this document, there are #total-words words outside of math formulas.
+  #outline(depth: 2)
+]
+
 #include("src/Omega-time duality.typ")
 
 #include("src/The sampling problem.typ")
