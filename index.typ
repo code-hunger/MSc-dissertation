@@ -17,7 +17,7 @@
 #show: great-theorems-init
 
 #show "Ito": "Itô" // hihi
-#show "Borel": math.cal($B$)+"orel" // is that too silly lol?
+#show "Borel": box(math.cal($B$)+"orel") // is that too silly lol?
 
 #import "@preview/wordometer:0.1.5": word-count, total-words
 #show: word-count
