@@ -27,7 +27,7 @@
   #outline(depth: 2)
 ]
 
-#include("src/Omega-time duality.typ")
+#include("src/Unstarted processes.typ")
 
 #include("src/The sampling problem.typ")
 
