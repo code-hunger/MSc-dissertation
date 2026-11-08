@@ -1,18 +1,20 @@
 #!/usr/bin/bash
 set -m
 
-for dark in "" "--input dark=1"; do
-  darkstr=""
-  if [ -n "$dark" ]; then
-    darkstr=".dark"
-  fi
+mkdir -p out/
 
-  (
-    set -x
-    typst c index.typ index$darkstr.pdf $dark
-    typst c index.typ index.A5$darkstr.pdf --input format=a5 $dark
-    typst c index.typ index.dense$darkstr.pdf --input format=2-column $dark
-  ) &
-done
+build() {
+  local darkstr=$1
+  local dark=${2-}
+  set -ex
+
+  typst c index.typ out/index$darkstr.pdf $dark
+  typst c index.typ out/index.A5$darkstr.pdf --input format=a5 $dark
+  typst c index.typ out/index.dense$darkstr.pdf --input format=2-column $dark
+}
+
+build ".soft" "" &
+build ".dark" "--input dark=1" &
+build "" "--input dark=0" &
 
 wait

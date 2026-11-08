@@ -3,6 +3,7 @@
 #import "@preview/intextual:0.1.1": intertext-rule, intertext, centertext, flushr, flushl
 #import "lib/wide.typ": wide, grid-columns-count, grid-vline-if-wide
 #import "lib/thm-blocks.typ": *
+#import "symbols.typ": *
 
 #import "@preview/cetz:0.5.2"
 
@@ -10,21 +11,11 @@
 #let eqB = math.equation.with(numbering: "(1)", block: true, number-align: bottom)
 #let eref(r) = $(#ref(supplement: none, r))$
 
-#let langle = sym.chevron.l
-#let rangle = sym.chevron.r
-#let ranglee = (math.mid(sym.chevron.r.double))
-#let ranglee = math.op(math.mid(sym.chevron.r.double))
-#let ranglee = math.mid(math.op(sym.chevron.r.double))
-#let given = math.mid(sym.bar.v)
-#let calB = $cal(B)$
-#let ket(c) = box(math.lr($|#c rangle$)) // call `lr` to enlarge the surrounding brackets in |X> if needed
-#let PPP(c) = $PP#ket(c)$
-#let PPPy(c) = $PP_Y#ket(c)$
 #let derivation-end-here = flushr(math.square)
 
 #show: intertext-rule
 
-= A generalized time derivative <generalized-time-derivative>
+== A generalized time derivative <generalized-time-derivative>
 
 #let pr(x,i) = $#box($(#x _#i)$)_#i$
 
@@ -36,7 +27,7 @@ equation for $partial_t PPP(Y_t)$ (if exists). This naïve way leads to inconsis
 In particular, a well-behaved generalization of $partial_t p(t,x)$ should be stable under changes to
 the initial conditions (the law of $Y_0$). We now show that $partial_t PPP(Y_t)$ is not.
 
-== The problem with $partial_t PPP(Y_t)$
+=== The problem with $partial_t PPP(Y_t)$
 
 #let X1 = $X$
 #let X2 = $Y$
@@ -64,10 +55,11 @@ So we'd want our generalization of $partial_t p$ to be the same on both processe
 #derivation(suffix: none)[
 Evaluate $partial_t LawX1t#at0$ on $[a, infinity)$ for $a in RR$:
 
+#box[
 #eqB($ partial_t med PP(X1_t >= a)#at0 &= lim_(epsilon->0) 1/epsilon (PP(X1_epsilon >= a) - PP(X1_0 >= a))
                                 \ &=^#eref(<def-X1-X2>) lim_(epsilon->0) 1/epsilon (PP(xi1 + r epsilon >= a) - PP(xi1 >= a))
 \ #intertext[(express#footnote[Having the usual notation for events in mind, $(xi>=a) equiv {omega in Omega | xi(omega)>=a}$] $(xi + r epsilon>=a)=(xi>=a) union (a-r epsilon<=xi<a)$)]
-                                      &= lim_(epsilon->0) 1/epsilon PP(a - r epsilon <= xi1 < a), $) <partial_t-law-limit>
+                                      &= lim_(epsilon->0) 1/epsilon PP(a - r epsilon <= xi1 < a), $) <partial_t-law-limit>]
 And similarly for $X2$:
 $ partial_t med PP(X2_t in [a, infinity))#at0 &= lim_(epsilon->0) 1/epsilon PP(a - r epsilon <= xi2 < a).  $
 
@@ -170,7 +162,7 @@ While both $X1_t$ and $X2_t$, as well as their plotted densities, are moving to 
 same rate $r$ (both driven by a shared $d X1=r thin d t= d X2$), the rate of weight gain per unit time of
 $[1,infinity)$ is twice as large in the $X2$ case as in the $X1$ case.
 
-== The time-derivative of $PPP(X_t)$
+=== The time-derivative of $PPP(X_t)$
 
 #let rt = $r thin t$
 #meta-prop[
@@ -223,7 +215,7 @@ Two problems arise in the derivation of the last expression: for it to work,
 Thus it is important to go back to @taylor-with-continuous-density and proceed in a way that does
 not require canceling a $F'_zeta$ term.
 
-== Getting #strike[out of] into the box
+=== Getting #strike[out of] into the box
 
 In @densities-figure we treated the increment $PPP(Z_epsilon)-PPP(Z_0)$ to the first order in
 $epsilon$ as a rectangle. We then obtained its width by dividing its mass by its height: $(epsilon r
@@ -255,7 +247,7 @@ considering the _joint_ law $ PPP(Z_epsilon\,Z_0): cal(B)(RR^2) -> [0,1]. $
 Let us see now how the time increment of $PPP(Z_t\,Z_0)$ looks like with the last derivation in
 mind.
 
-=== Diffusions
+==== Diffusions
 #meta-prop[
   Consider the diffusion process $ Z_t = zeta + r t + W_t $ for a constant $r>0$ and an initial $Z_0=zeta$ independent from the Wiener process $pr(W,t)$.
 ]

@@ -1,11 +1,11 @@
 #import "lib/thm-blocks.typ": *
 #import "symbols.typ": *
 
-= Unstarted Markov processes
+== Unstarted Markov processes
 
-It is said that to move forward, one should first know their roots. In this first chapter, we will
+_It is said that to move forward, one should first know their roots. In this first chapter, we will
 do exactly the opposite, and delete the past all up to the present. This thesis is all about going
-back.
+back._
 
 #meta-prop[
 We will live in a measurable space $(Omega, calF)$, see the world on a Borel screen $D subset.eq
@@ -66,7 +66,7 @@ $plus.o$,
 Whether such a decomposition formally holds for general Markov chains is out of our scope, and
 instead we focus on Ito processes.
 
-#heading(level: 2, numbering: none)[Unstarted Ito processes]
+#heading(level: 3, numbering: none)[Unstarted Ito processes]
 #meta-prop[
   Let time run smoothly $I=RR_(>=0)$ now and let a Wiener process $pr(W,t)$ land on our probability
   space. 
@@ -88,7 +88,7 @@ definition --- akin to how the Markov kernels are standalone objects paired with
 
 After all, the same $b, sigma$ induce different solutions for different starting points $x_0$. So
 what does a standalone expression $ d Xt= b(t,X_t) dt + sigma(t,Xt)dWt $ mean? It is a map 
-$ x |-> "a solution" pr(X^((x)),t) "to the SDE started at" x. $
+$ x op(|->) (#align(left,stack(spacing: 1em, [a solution $\(X^((x))_t)_t$ to], [the SDE started at $x$]))). $
 
 #let X0 = $X^((x_0))$
 #let X0t = $X0_t$

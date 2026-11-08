@@ -1,0 +1,53 @@
+Andrea:
+  title: "Sampling, Diffusions, and Stochastic Localization"
+  author: Montanari, Andrea
+  date: 2025-09-03
+  url: https://arxiv.org/abs/2305.10690v2
+  type: article
+  publisher: arXiv
+
+DeepUnsupNonEquilibrium:
+  title: "Deep Unsupervised Learning using Nonequilibrium Thermodynamics"
+  type: article
+  date: 2015
+  url: https://arxiv.org/abs/1503.03585v8
+  author: 
+    - Jascha Sohl-Dickstein
+    - Eric A. Weiss
+    - Niru Maheswaranathan
+    - Surya Ganguli
+
+GenModByGradients:
+  title: Generative Modeling by Estimating Gradients of the Data Distribution
+  type: article
+  author: 
+    - Yang Song
+    - Stefano Ermon
+  url: https://arxiv.org/abs/1907.05600
+
+PerspectivesOnStL:
+  title: Perspectives on Stochastic Localization
+  type: article
+  url: https://arxiv.org/abs/2510.04460
+  author:
+    - Bobby Shi
+    - Kevin Tian
+    - Matthew S. Zhang
+
+TimeReversalOfDiffusions:
+  title: Time Reversal of Diffusions
+  type: article
+  author:
+    - U. G. Haussmann
+    - E. Pardoux 
+  publisher: Ann. Probab. 14 (4) 1188 - 1205, 
+  date: 1986-10
+  url: https://doi.org/10.1214/aop/1176992362
+
+ConvergenceBook:
+  isbn: 9780470316962
+  title: Convergence of Probability Measures
+  type: book
+  date: 1999
+  author: Patrick Billingsley
+  chapter: "1.6"

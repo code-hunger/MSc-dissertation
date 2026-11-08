@@ -1,4 +1,4 @@
-To read the article, simply open [index.pdf].
+To read the article, simply open [main-white.pdf].
 
 If you're in the dark or use a small screen or want to print, you may prefer one of these:
 
@@ -6,5 +6,6 @@ If you're in the dark or use a small screen or want to print, you may prefer one
 | ---------- | -------------- | ----------------- | -------------------- | 
 | Light mode | [index.pdf](index.pdf)      | [index.A5.pdf](index.A5.pdf)      | [index.dense.pdf](index.dense.pdf)      | 
 | Dark mode  | [index.dark.pdf](index.dark.pdf) | [index.A5.dark.pdf](index.A5.dark.pdf) | [index.dense.dark.pdf](index.dense.dark.pdf) | 
+| Yellow mode  | [index.mild.pdf](index.mild.pdf) | [index.A5.mild.pdf](index.A5.mild.pdf) | [index.dense.mild.pdf](index.dense.mild.pdf) | 
 
 To compile all versions, run `bash build-all.bash`.

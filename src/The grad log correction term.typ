@@ -2,8 +2,27 @@
 #import "@preview/intextual:0.1.1": intertext-rule, intertext, centertext
 #import "lib/colour.typ": colour
 #import "lib/wide.typ": wide, grid-columns-count, grid-vline-if-wide
+#import "symbols.typ": *
 
-= The $nabla log p$ term
+== The $nabla log p$ term
+
+By general abstract theory (@TimeReversalOfDiffusions, as cited by @Andrea), an Ito process $  d X_t = b_t (X_t) d t + sigma_t d W_t, quad X_0 ~ mu $
+has a time-reversal (under some assumptions on $b,sigma,mu$)
+$ d Y_r = (-overline(b)_t (Y_t) + nabla_y log p(t,y)) d t + overline(sigma)_t (Y_t) d overline(W)_t $
+where $overline(b) (t,y) = b(1-t, y)$ and $overline(sigma)(t,y) = sigma(1-t,y)$, and $p(t,dot)$ is the density of $X_(1-t)$.
+While the negated $b$ in the reversal makes sense (if $X$ drifts down as time moves forward, then
+the backward $Y$ must drift up), the logarithm gradient appears in a mysterious way.
+
+Another source of $nabla log p$ terms is the equation of Langevin dynamics 
+$ d X_t = nabla log p (X_t) + sqrt(2) dWt, "for " $
+that serves as a sampling algorithm e.g. in @GenModByGradients. The $nabla log p$ term is called
+the _score_ function, and a neural network is trained to learn it, so that later a discretisation of
+the Langevin equation can be run to produce samples.
+
+In this section we derive where exactly this $nabla log p$ comes from. We do not prove that the
+reversed process is a diffusion, we only derive what its coefficients must be if it exists.
+
+=== For time-reversed diffusions
 
 #let tb = $tilde(b)$
 #let tsigma = $tilde(sigma)$

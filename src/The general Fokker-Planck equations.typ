@@ -2,27 +2,12 @@
 #import "@preview/intextual:0.1.1": intertext-rule, intertext, centertext, flushr, flushl
 #import "lib/wide.typ": a4, grid-columns-count, grid-vline-if-wide
 #import "lib/thm-blocks.typ": *
+#import "symbols.typ": *
 
 #import "@preview/cetz:0.5.2"
 
-#let eq = math.equation.with(numbering: "(1)", block: true)
-#let eqB = math.equation.with(numbering: "(1)", block: true, number-align: bottom)
 #let eref(r) = $(#ref(supplement: none, r))$
 
-#let langle = sym.chevron.l
-#let rangle = sym.chevron.r
-#let ranglee = (math.mid(sym.chevron.r.double))
-#let ranglee = math.op(math.mid(sym.chevron.r.double))
-#let ranglee = math.mid(math.op(sym.chevron.r.double))
-#let given = math.mid(sym.bar.v)
-#let calB = $cal(B)$
-#let ket(c) = box(math.lr($|#c rangle$)) // call `lr` to enlarge the surrounding brackets in |X> if needed
-#let PPP(c) = $PP#ket(c)$
-#let PPPy(c) = $PP_Y#ket(c)$
-#let dPPP(c) = $dif PPP(#c)$ // call `lr` to enlarge the surrounding brackets in |X> if needed
-#let derivation-end-here = flushr(math.square)
-
-#let Yt = $Y_t$
 #let Yte = $Y_(t+epsilon)$
 #let ate0 = $|_(epsilon=0)$
 #let partial-epsilon() = $partial_epsilon$
@@ -32,7 +17,7 @@
 #let Walter-seminar = myref("Walter")
 #let Zaragoza = myref("Garcia-Palacios")
 
-= The Fokker-Planck equation
+== The Fokker-Planck equation
 
 #let pr(x,i) = $#box($(#x _#i)$)_#i$
 
@@ -70,14 +55,20 @@ to admit densities (against the Lebesgue measure, as done in these resources). T
 arrive at a PDE of distributions (weak form) and not of ordinary functions. Only after will we
 specialize to density-admitting processes (strong form).
 
-== Weak form
+=== Weak form
+The evolution
 
-#figure(placement: if a4 {bottom} else { auto }, abstr-nons[
-In this block we generalize the relation $ PP[B] = EE[1_B], quad "for every event" B, $ from events $B$
-to random variables $X$.
+// #figure(placement: if a4 {bottom} else { auto }, 
+#abstr-nons[
 
+  #meta-prop[
+    We want to generalize the relation $ PP[B] = EE[1_B], quad "for every event" B, $ from events $B$
+    to random variables $X$, so that we can write the law of $X$ as an expectation.
+  ]
+
+#derivation[
 On events
-regarding random variables, $B = (X in A)$, the equivalence reads 
+regarding random variables, $B = (X in A)$, the equivalence $PP[B]=EE[1_B]$ reads 
 #eq($ PP(X in A) = EE[1_(X in A)]. $)<E-P-equivalence-on-X-A>
 
 Below we are interested in using that equality over all Borel $A$, in which case the left hand side
@@ -91,16 +82,16 @@ Indeed, $1_(X in A) = 1_A (X)$.
 Now recall that the characteristic function ($1_A (x)$) is the Dirac-delta function with flipped arguments: for
 all Borel $A$ and all $y in RR$,
 $ 1_A (y) = delta_y (A).$
-Evaluating that at $y:=X$,
-$ 1_A (X) = delta_X (A),$
-we get #eq($ 1_(X in A) = 1_A (X) = delta_X (A) $)<1-is-delta>
-and so 
+Evaluated at $y:=X$, this reads
+$ 1_A (X) = delta_X (A).$
+Chaining with the equality from the last paragraph, we get #eq($ 1_(X in A) = 1_A (X) = delta_X (A)
+$)<1-is-delta> and so 
 
 $ forall med"Borel" A: quad PP(X in A) =^#eref(<E-P-equivalence-on-X-A>) EE[1_(X in A)] =^#eref(<1-is-delta>) EE[delta_X (A)], $
 which in point-free style reads 
-#eq($ PPP(X) = EE[delta_X] $)<P-E-equivalence-on-X>
+#eq($ PPP(X) = EE[delta_X]. $)<P-E-equivalence-on-X> 
 as an equality of measures.
-])
+]]
 
 We will derive the Fokker-Planck equations by a Taylor expansion of the evolution of $PPP(Y_t)$. 
 
@@ -210,7 +201,7 @@ $b_t (y), sigma_t (y)$ instead of $b(t,y),sigma(t,y)$.
     = -partial [&b_t#ket($Yt$)] + 1/2 partial^2 [sigma_t^2ket(Yt)]. $)<fokker-plank-eqn>
 ]
 
-== Strong form
+=== Strong form
 
 Now we specialize to the case when $pr(Y,t)$ has all densities.
 
@@ -251,23 +242,3 @@ Then if $ rho(x) = (d PP_(X_0)) / (d x) (x),\ rho(t,y) := integral p_t (x,y)rho(
 Fokker-Planck is $ partial_t rho(t,y) = scr(L)^+_y rho(t,y). $
 */
 
-=== Chapman-Kolmogorov
-
-#meta-prop[A real-valued Markov process $pr(Y,t)$.]
-
-For two time points $t_1 <= t_2$ and an $epsilon>0$,
-the Chapman-Kolmogorov equation for the process $Y$ states that the probability flux between times $t_1$
-and $t_2 + epsilon$ goes through all possible values at the midtime $t_2$:
-
-$ PP|Y_(t_2 + epsilon) given Y_(t_1) rangle = PP|Y_(t_2 + epsilon) given Y_(t_2) ranglee Y_(t_2) given Y_(t_1) rangle. $
-
-Now we are interested to derive the time-evolution of the left-hand side, and so we need only two
-time points. Fix $t>0$ and $epsilon>0$ and plug $t_1 = t_2 = t$ above:
-$ PP|Y_(t + epsilon) given Y_t rangle &= PP|Y_(t + epsilon) given Y_t ranglee Y_t given Y_t rangle $
-and integrate along $ket(Y_t)$
-$ PP|Y_(t + epsilon) rangle &= PP|Y_(t + epsilon) given Y_t ranglee Y_t rangle, $
-or, if we allow ourselves to write the time indices only:
-#conclusion[
-  For any Markov $pr(Y,t)$ and times $t,t+epsilon$,
-  $ PPPy(t + epsilon) = PPPy(t + epsilon given t ranglee t). $
-]

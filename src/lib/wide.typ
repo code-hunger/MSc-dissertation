@@ -14,7 +14,7 @@
   let margins = (// more margins to allow space for note taking with other tools
     if "note-taking" in sys.inputs { (left: 1cm, top: 1cm, right: 6cm, bottom: 7cm) }
     else if format == "2-column" { (x: 1cm) }
-    else if wide { 3cm }
+    else if wide { 3.2cm }
   )
   let margins = if margins != none { (margin: margins) } else { (:) }
 

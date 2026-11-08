@@ -61,13 +61,13 @@ Depending on what is known, more specific sampling problems can be considered. O
 A sampling algorithm is then packaged in different ways depending on which case we fall in: if $mu$
 is known, the algorithm is run directly, otherwise $mu$ has to be estimated first.
 
-Being an object of shape#footnote[$cal(B)(RR^N)$ is the set of measurable subsets of $RR^N$.]
+Being an object of shape#footnote[$cal(B)(RR^N)$ denotes the set of Borel subsets of $RR^N$.]
 #box($cal(B)(RR^N)->RR$) (so really a point in an infinitely dimensional space), a probability
-distribution is hard to be estimated directly. We know, however, how to approximate functions of
-shape $RR^N->RR$ via neural networks, and fortunately it will turn out that this is sufficient as a
-sampling algorithm won't require to know the full $mu:cal(B)(RR^N) -> RR$.
+distribution is hard to estimate directly. We know, however, how to approximate functions of
+shape $RR^N->RR$ via neural networks, and fortunately it will turn out that this is sufficient --- a
+sampling algorithm won't need to know the full $mu:cal(B)(RR^N) -> RR$.
 
-#heading(level: 2, numbering: none)[Reduction to a Score]
+#heading(level: 3, numbering: none)[Reduction to a Score]
 
 Instead, the sampling algorithms we discuss here will depend on the target distribution $mu$ only through a
 real-valued function on (finitely many) real arguments, $m_mu (t,y_1,...,y_n)$, so of shape $ m_mu :
@@ -78,7 +78,7 @@ the algorithm's dependence on $mu$ allows us to work even in cases where $mu$ is
 assumed to exist), as then $m_mu$ will be estimated from a dataset, e.g. by means of an
 artificial neural network. 
 
-In this article, instead of the standalone problem of constructing a sampling algorithm for a given
+So in this article, instead of the standalone problem of constructing a sampling algorithm for a given
 distribution $mu$, we consider the reduction
 
 #let squeeze(c) = box(par(c), baseline: horizon)
@@ -90,10 +90,9 @@ sampling algorithm runs a Markov chain whose transitions are learned from data. 
 instance of this technique, though, comes from using _stochastic localizations_ as sampling algorithms
 as described in @Andrea.
 
-Before we close this high-level overview, we stress that in our work we will _assume_ that the
-respective estimator job has been done, and will only focus on the sampling algorithm that _uses_
-said estimator. 
-In terms of $(star)$ the conceptual chain above illustrating the reduction from sampling to
+In our work we will _assume_ that the respective estimator job has been done, and will only focus on
+the sampling algorithm that _uses_ said estimator. 
+In terms of the conceptual chain $(star)$ illustrating the reduction from sampling to
 estimation, we only construct the middle link. We will not tackle estimation of $m_mu$ --- this is
 a non-trivial task on its own; problems arising there have been explored in practice for example in
 @GenModByGradients.
