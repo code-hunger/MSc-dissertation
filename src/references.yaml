@@ -51,3 +51,17 @@ ConvergenceBook:
   date: 1999
   author: Patrick Billingsley
   chapter: "1.6"
+
+WalterFokkerPlanckLangevin:
+  type: article
+  title: Fokker-Planck and Langevin Equation
+  date: 2021-12-10
+  author: Daniel Walter
+  url: https://web.archive.org/web/20250306121848/https://www.thphys.uni-heidelberg.de/~wolschin/statsem21_6s.pdf
+
+ZaragozaIntroToStochasticProcesses:
+  type: book 
+  title: Introduction to the theory of stochastic processes and Brownian motion problems
+  date: 2004-05
+  author: J. L. Garcı́a-Palacios
+  url: https://arxiv.org/abs/cond-mat/0701242

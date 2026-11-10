@@ -1,7 +1,7 @@
 #import "symbols.typ": *
 #import "lib/thm-blocks.typ": *
 
-== Stochastic localisation as a source of sampling algorithms
+== Stochastic localisation
 
 #meta-prop[
   Pick a probability space $(Omega, PP)$, a subset $D subset RR^N$ and a probability distribution $mu : calB (D) -> [0,1]$.
@@ -28,25 +28,40 @@ The idea is to "reach" $x$ by a sequence of random variables $pr(Y,t)$ that clea
 
 #definition[
   An *observation process* of $x$ is a sequence of $RR^N$-valued random variables $(Y_t: t in RR_+)$ such that
-  + any finite sequence of the form $ x,Y_t_n,...,Y_t_1 $ forms a Markov chains, for all $t_1 < dots.c < t_n$;
+  + any finite sequence of the form $ x,Y_t_n,...,Y_t_1 $ forms a Markov chain, for all $t_1 < dots.c < t_n$;
   + all the $Y_t$ together determine $x$ in the sense that for any Borel $A subset.eq RR^N$, the
     following conditional probability takes only the values 0 and 1: $ PP(x in A given {Yt:t>=0}) in
     {0,1}. $
   The *stochastic localisation* of $x$'s distribution then is defined as the sequence of conditional laws 
-  $ mu_t (A) := PP(x in A | {Y_t:t>=0}). $
+  $ mu_t (A) := PP(x in A | {Y_s:s<=t}). $
 ]
 
-$Y_t$ is what reveals more information about $x$ as time progresses, where the information being revealed is encoded in the conditional laws $mu_t$.
-We will discuss this type of objects in more detail in the next new sections, but first we also give
-the second characterization of a stochastic localisation.
+$Y_t$ is what reveals more information about $x$ as time progresses, where the information being
+revealed is encoded in the conditional laws $mu_t$. We will discuss this type of objects in more
+detail in @bra-ket-section, but first we also give the second characterization of a stochastic
+localisation.
 
 === Def. 2: Measure martingales
 
 It directly describes the relationship between all $mu_t$ and $mu$, and as usually stated may appear
-to be very abstract and working with a kind of higher-order probability because it uses the term
-_random measure_. One should keep in mind that we still have just one probability space ($Omega$),
-and the $mu_t$'s are simply kernels (conditional laws) on it. The reason that the Markov kernels are
-seen as random measures is that the process they form turns out to be a martingale:
+to be very abstract because it uses the term _random measure_. 
+
+#heading(level: 4, numbering: none)[A word on random measures]
+A measure has shape $calB -> [0,infinity]$ for some $sigma$-algebra $calB$ on some
+set#footnote[we're suggestively using the symbol $calB$ for the $sigma$-algebra as we're only
+interested in random measures on Borel subsets of $RR^N$.] $D subset.eq RR^N$,
+and _random_ means having an $Omega$ dependence, so a _random measure_ is an object of shape
+$ Omega -> (calB -> [0,infinity]). $
+Thus it may appear that a random measure is a kind of higher-order probability, as there are two
+randomness sources here --- $Omega$ and $calB$. 
+By abstract nonsense (uncurrying) a random measure is naturally equivalent to a two-argument function,
+$ Omega times calB -> [0,infinity] $
+
+As discussed in @bayes-for-random-variables, though, this is precisely the shape of Markov kernels
+(conditional laws) on $Omega$. The reason we'll look at the Markov kernels as random measures
+instead is that the process they form turns out to be a martingale. One should keep in mind that we
+still have just one source of randomness, $Omega$, and the $(calB->[0,infinity])$ are just
+projections of the presupposed probability $PP$ on $D$.
 
 #definition[
   Pick a random variable $x$ with values in $RR^N$ and law $mu$.
@@ -74,6 +89,7 @@ properties in each correspond to each other:
 We will investigate the language used here in more detail in the next few sections, but we first
 outline how stochastic localisation is used in sampling.
 
+== Two ways to sample with Localisation
 === Diffusion time-reversal
 Diffusion based sampling is the approach of time-reversal of a diffusion process.
 

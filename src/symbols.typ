@@ -32,6 +32,7 @@
 #let PPPy(c) = $PP_Y#ket(c)$
 #let dPPP(c) = $dif PPP(#c)$ // call `lr` to enlarge the surrounding brackets in |X> if needed
 
+#let oto = box(math.arrow.long.r + place(center+horizon, math.circle.small))
 
 #let eq = math.equation.with(numbering: "(1)", block: true)
 #let eqB = math.equation.with(numbering: "(1)", block: true, number-align: bottom)

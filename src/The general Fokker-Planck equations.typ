@@ -11,11 +11,10 @@
 #let Yte = $Y_(t+epsilon)$
 #let ate0 = $|_(epsilon=0)$
 #let partial-epsilon() = $partial_epsilon$
+#let partial0(c) = $partial_epsilon$ + c + ate0
+#let pket(c) = math.partial + ket(c)
 
 #show: intertext-rule
-
-#let Walter-seminar = myref("Walter")
-#let Zaragoza = myref("Garcia-Palacios")
 
 == The Fokker-Planck equation
 
@@ -49,11 +48,11 @@ evolution of an Ito stochastic process is not $PPP(Y_t)$ but $PPP(Y_t given Y_0)
 approach to deriving the Fokker-Planck equation.
 
 We will derive it by Tailor-expansion of the transition densities, following the general approach in
-#Walter-seminar or the referenced inside #Zaragoza, sec. 4 and 5. However, we completely rework it
-in the language of measures and Markov kernels so that the probability distributions are not assumed
-to admit densities (against the Lebesgue measure, as done in these resources). This is why we will
-arrive at a PDE of distributions (weak form) and not of ordinary functions. Only after will we
-specialize to density-admitting processes (strong form).
+@WalterFokkerPlanckLangevin or the referenced inside @ZaragozaIntroToStochasticProcesses, sec. 4 and 5.
+However, we completely rework it in the language of measures and Markov kernels so that the
+probability distributions are not assumed to admit densities (against the Lebesgue measure, as done
+in these resources). This is why we will arrive at a PDE of distributions (weak form) and not of
+ordinary functions. Only after will we specialize to density-admitting processes (strong form).
 
 === Weak form
 The evolution
@@ -102,7 +101,7 @@ We will derive the Fokker-Planck equations by a Taylor expansion of the evolutio
 ]
 #derivation(suffix:none)[
 We first rewrite 
-#eq($ PPP(Yte given Y_t) =^#eref(<P-E-equivalence-on-X>) EE [ delta_Yte given Y_t ].
+#eq($ cPPP(Yte given Y_t) =^#eref(<P-E-equivalence-on-X>) EE [ delta_Yte given Y_t ].
 $)<Yte-P-E-equiv>
 
 #figure(placement: if a4 { bottom } else { auto }, abstr-nons[
@@ -126,66 +125,70 @@ $ forall y'=y+Delta: quad delta_y' &= delta_(y + Delta)
           \ &= delta_y + delta'_y Delta + delta''_y (Delta^2)/2 + dots.c
 $
 which evaluated at $y=Y_t$ and $y' = Yte$ and substituted into @Yte-P-E-equiv yields#footnote[by $EE[delta^((k))_Yt given Y_t]=delta^((k))_Yt$ for all $k$.]
-#eq($ ket(Yte | Y_t) = delta_Y_t 
+#eq($ kett(Yte | Y_t) = delta_Y_t 
   &+ delta'_Y_t EE[DeltaY given Y_t] 
 \ &+ 1/2 delta''_Y_t EE[DeltaY^2 given Y_t] + dots.c $)<kram-expansion>
 
 #let lime = $lim_(epsilon->0)$
-Denote the coefficients behind the derivatives of $delta_Yt$ by 
-$ a^((k))_t (y) = lime 1/epsilon EE[(Yte-Yt)^k given Y_t=y] $
-(as almost-everywhere defined functions on $RR$, for each $k in NN$ and $t>=0$).
+// Denote the coefficients behind the derivatives of $delta_Yt$ by 
+// $ c^((k))_t (y) = EE[(Yte-Yt)^k given Y_t=y] $
+// (as almost-everywhere defined functions on $RR$, for each $k in NN$ and $t>=0$).
 
 Glossing over details, we evaluate the coefficients to be
-$ a^((1))_t &= lime 1/epsilon EE[Y_(t+epsilon)-Y_t given Y_t]
-          \ &= lime 1/epsilon EE[integral_t^(t+epsilon) b d s + integral_t^(t+epsilon) sigma d W_s given Y_t ]
+$ & EE[Y_(t+epsilon)-Y_t given Y_t]
+          \ &= EE[integral_t^(t+epsilon) b d s + integral_t^(t+epsilon) sigma d W_s given Y_t ]
 \ ("since" &inline(EE[integral sigma d W_s]=0 "and" 1/epsilon integral_t^(t+epsilon) b d s -> b(t)) )
-          \ &= b(Y_t, t)
+          \ &= b(Y_t, t) dot epsilon + o(epsilon)
 $
 and 
-$ a^((2))_t &= lime 1/epsilon EE[(Y_(t+epsilon)-Y_t)^2 given Y_t]
-\ ("since" &inline((integral b d s)^2 = o(epsilon^2) "and" ()))
-          \ &= lime 1/epsilon EE[inline((integral_t^(t+epsilon) sigma(s,Y_s) d W_s))^2 given Y_t]
+$ & EE[(Y_(t+epsilon)-Y_t)^2 given Y_t]
+          \ &= EE lr([
+              underbrace(inline((integral b d s)^2), o(epsilon^2)) 
+              + underbrace(inline(integral b ds), o(epsilon))
+                underbrace(inline(integral sigma d W), o(sqrt(epsilon)))
+              + inline((integral sigma d W)^2 )
+              given Y_t], size: #2em)
+          \ &= EE[inline((integral_t^(t+epsilon) sigma(s,Y_s) d W_s))^2 given Y_t] + o(epsilon)
           \ & quad quad ("Ito isometry")
-          \ &= lime 1/epsilon EE[integral_t^(t+epsilon) sigma^2 (s,Y_s) d s given Y_t]
-          \ &= sigma^2 (t, Y_t),
+          \ &= EE[integral_t^(t+epsilon) sigma^2 (s,Y_s) d s given Y_t] + o(epsilon)
+          \ &= sigma^2 (t, Y_t) dot epsilon + o(epsilon),
 $
-while higher-order coefficients $a_t^((k)), k>2$ consist of limits of expectations of linear
-combinations of terms 
-$ 1/epsilon (integral_t^(t+epsilon) b(t,Y_t) d s)^(k-i) (integral_t^(t+epsilon) sigma(t,Y_t) d W_s)^i
-\ = 1/epsilon o(epsilon^(k-i) epsilon^(i\/2)) $
-which all vanish.
+while higher-order coefficients consist of limits of expectations of linear combinations of terms 
+$ (integral_t^(t+epsilon) b(t,Y_t) d s)^(k-i) (integral_t^(t+epsilon) sigma(t,Y_t) d W_s)^i
+\ = o(epsilon^(k-i) epsilon^(i\/2)) subset o(epsilon) quad ("for " k>2). $
 
-Then @kram-expansion with $partial_epsilon#ate0$ applied reads $ #partial-epsilon()ket(Yte | Y_t) #ate0 = b(t,Y_t) delta'_Y_t + 1/2 sigma^2 (t,Y_t) delta''_Yt, $
+Then @kram-expansion to the first order, i.e. with $partial_epsilon#ate0$ applied, reads $ #partial-epsilon()kett(Yte | Y_t)#ate0 = b(t,Y_t) delta'_Y_t + 1/2 sigma^2 (t,Y_t) delta''_Yt, $
 or, introducing explicit variable for $Yt=y$,
-$ #partial-epsilon()ket(t+epsilon given t:y) #ate0 = b(t,y) delta'_y + 1/2 sigma^2 (t,y) delta''_y, $
+$ #partial-epsilon()kett(t+epsilon given t:y)#ate0 = b(t,y) delta'_y + 1/2 sigma^2 (t,y) delta''_y, $
 to signify that this is an equality of distributions parametrized by $y$ for almost every $y in RR$,
-i.e. an equality of objects of shape $ RR ->_("a.e.") (C_0^infinity -> RR).$
+i.e. an equality of objects of shape $ RR oto (C_0^infinity -> RR).$
 
 Now we will integrate the free-hanging $y$ against $PPP(Y_t)=PPPy(t\:y)$, which on the left side turns
 $ PPPy(t+epsilon|t:y ranglee t:y) = PPPy(t+epsilon) $ and so we're left with an equation of distributions
 $ #partial-epsilon()ket(t+epsilon)#ate0 
-  &= ket(b(t,y) delta'_y + inline(1/2) sigma^2 (t,y) delta''_y ranglee t\:y). 
-\ &= ket(b(t,y) delta'_y ranglee t\:y)\ & #h(2em) + 1/2 ket(sigma^2 (t,y) delta''_y ranglee t\:y).
+  &= integral b(t,y) delta'_y + inline(1/2) sigma^2 (t,y) delta''_y dPPP(t\:y). 
+\ &= ket(b(t,y) delta'_y ranglee t\:y)
+    \ & #h(2em) + 1/2 ket( sigma^2 (t,y) delta''_y ranglee t\:y).
 $
 #let distributional-terms = footnote[For any $phi in C_0^infinity$, 
 $ langle phi given b(t,y) delta'_y ranglee t:y rangle 
   &= langle b(t,y) phi given delta'_y ranglee t:y rangle 
-\ &= - langle b(t,y) dot(phi) given t:y rangle 
-\ &= langle dot(phi) given -b(t,y) given t:y rangle 
-\ &= langle phi given partial given -b(t,y) given t:y rangle 
+\ &= - langle b(t,y) dot(phi)(y) given t:y rangle 
+\ &= - langle dot(phi)(y) given b(t,y)|t:y rangle 
+\ &= langle phi given partial given b(t,y)|t:y rangle 
 $]
 As distributions, 
-      $ ket(b(t,y) delta'_y  ranglee t:y) &= -partial_y   thin [       b(t,y)ket(t\:y) ]
-\ ket(sigma^2(t,y) delta''_y ranglee t:y) &=  partial_y^2 thin [ sigma^2(t,y)ket(t\:y) ], $
-which can be easily derived by acting on test functions#distributional-terms. The right hand sides here are the
+      $ ket(b(t,y) delta'_y ranglee t\:y) &= pket(b(t,y)|t\:y)
+\ ket(sigma^2(t,y) delta''_y ranglee t:y) &= partial^2ket( sigma^2(t,y)|t\:y), $
+which can be easily derived#distributional-terms by acting on test functions. The right hand sides here are the
 distributional derivatives of the products of $b$ and $sigma^2$ with the distribution of $Y_t$,
 $ket(t\:y)$.
 
 And so we derived the Fokker-Planck equation:
-$ #partial-epsilon()ket(t+epsilon)#ate0 
-    = -partial [&b(t,y)ket(t\:y)] 
+$ partial0(ket(t+epsilon))
+    = partial&ket(b(t,y)|t\:y)
     \
-    #derivation-end-here + &1/2 partial^2 [sigma^2(t,y)ket(t\:y)] $
+    #derivation-end-here + &1/2 partial^2ket(sigma^2(t,y)|t\:y) $
 ]
 
 We can spell the result in a less clumsy way if we leave the bound variable $y$ implicit. For
@@ -198,7 +201,7 @@ $b_t (y), sigma_t (y)$ instead of $b(t,y),sigma(t,y)$.
 
   Then its laws $PPP(Y_t)$ satisfy the Fokker-Planck equation:
   #eq($ #partial-epsilon()ket(Yte)#ate0 
-    = -partial [&b_t#ket($Yt$)] + 1/2 partial^2 [sigma_t^2ket(Yt)]. $)<fokker-plank-eqn>
+    = pket(b_t|Yt) + 1/2 partial^2ket(sigma_t^2|Yt). $)<fokker-plank-eqn>
 ]
 
 === Strong form
@@ -208,14 +211,20 @@ Now we specialize to the case when $pr(Y,t)$ has all densities.
 #meta-prop[Let $pr(Y,t)$ be the solution of the SDE as above, and additionally assume that 
 its laws admit densities against the Lebesgue measure, i.e.
 $ forall t>=0: quad dPPP(Yt) = p_t (y) d y $
+for functions $p_t$. We write the regular ket $ket(Y_t)=ket(p_t)$.
 ]
 
-Susbstitute $ket(Yt)=p_t (y) d y$ in @fokker-plank-eqn
+Put $ket(Y_t)=ket(p_t)$ in @fokker-plank-eqn
 to get
-$ #partial-epsilon()p_(t+epsilon) (y) d y#ate0 
-    = -partial [&b_t p_t d y] + 1/2 partial^2 [sigma_t^2 p_t d y]. $
-Now simply read out the classical PDE in fron of $d y$:
+$ partial0(ket(p_(t+epsilon)))
+    = pket(b_t|p_t) + 1/2 partial^2ket(sigma_t^2|p_t). $
+For regular distributions we have $ket(b_t|p_t)=ket(b_t p_t)$ and $pket(b_t p_t) = -
+ket(partial (b_t p_t))$, so the equation resolves to 
+$ ket(partial_t p_t)
+    = -ket(partial (b_t p_t)) + 1/2 ket(partial^2(sigma_t^2 p_t)). $
 
+Equality of regular distributions is equality of the underlying functions, which gets us the
+classical PDE:
 #conclusion[The Fokker-Planck equation on the densities $p_t$ of $pr(Y,t)$:
 $ partial_t p_t = -partial_y (b_t  p_t)(y) + 1/2 partial_y^2 (sigma_t^2 p_t)(y) $
 ]

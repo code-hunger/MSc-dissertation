@@ -12,8 +12,10 @@
 
 #set page(page-base, numbering: "1.", ..page-args, footer: myfooter)
 #let letters = ("A", "B", "C", "D", "E", "F")
-#show heading.where(level: 1): set heading(numbering: "I.")
+// #show heading.where(level: 1): set heading(numbering: "I.")
+#set heading(numbering: "I.A.1")
 #show selector.or(..(2,3,4).map(l => heading.where(level: l))): set heading(numbering: (chapter, letter, ..nums) => letters.at(letter - 1) + "." + nums.pos().map(str).join("."))
+#show ref.where(element: heading): set heading(numbering: "1)1)")
 #show heading.where(level: 1): set block(below: 2em)
 #show heading.where(level: 2): set block(below: 1.5em)
 #show heading.where(level: 3): set block(below: 1.1em)
@@ -75,10 +77,11 @@
 #include("src/Bayes philosophy.typ")
 #include("src/Unstarted processes.typ")
 #include("src/Stochastic Localisation.typ")
-#include("src/Bra-Ket notation.typ")
 
 = Stochastic localisation with time-reversed diffusions
+Before we even attempt to reverse time, we need to understand how it flows forward.
 #include("src/Time-derivative of density.typ")
+#include("src/Bra-Ket notation.typ")
 #include("src/The general Fokker-Planck equations.typ")
 #include("src/The grad log correction term.typ")
 
